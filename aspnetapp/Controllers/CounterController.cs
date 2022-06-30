@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using aspnetapp;
 
+
 public class CounterRequest {
     public string action { get; set; }
 }
@@ -73,5 +74,7 @@ namespace aspnetapp.Controllers
                 return BadRequest();
             }
         }
+        
+
     }
 }
