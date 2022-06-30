@@ -74,7 +74,6 @@ namespace aspnetapp.Controllers
                 return BadRequest();
             }
         }
-        
 
     }
 }

@@ -6,6 +6,12 @@ namespace aspnetapp.Controllers
     [ApiController]
     public class VoiceController:ControllerBase
     {
+        private readonly CounterContext _context;
+
+        public VoiceController(CounterContext context)
+        {
+            _context = context;
+        }
         [HttpGet]
         public bool getUseful()
         {
