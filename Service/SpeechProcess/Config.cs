@@ -6,7 +6,7 @@ public class Config
 	 * Please do not commit the secrets to the repository.
 	 */
 
-    public const string SECRET_ID = "";
-
-    public const string SECRET_KEY = "";
+    public static readonly string SECRET_ID = Environment.GetEnvironmentVariable("SECRET_ID");
+	
+    public static readonly string SECRET_KEY = Environment.GetEnvironmentVariable("SECRET_KEY");
 }
