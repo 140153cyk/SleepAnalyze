@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Web;
 
 namespace Service.SpeechProcess;
 
@@ -11,13 +12,14 @@ using TencentCloud.Asr.V20190614.Models;
 
 public class ASR
 {
-    public static string RecognizeSpeech(string url, string usrAudioKey, string voiceFormat = "mp3")
+    public static string RecognizeSpeech(string url, string usrAudioKey, string voiceFormat = "m4a")
     {
-        string encodedUrl = WebUtility.UrlEncode(url);
+        string encodedUrl = HttpUtility.UrlPathEncode(url);
+        // string encodedUrl = url;
         Credential cred = new Credential
         {
-            SecretId = "SecretId",
-            SecretKey = "SecretKey"
+            SecretId = Config.SECRET_ID,
+            SecretKey = Config.SECRET_KEY
         };
 
         ClientProfile clientProfile = new ClientProfile();
