@@ -2,5 +2,10 @@
 
 public class VoiceRequest
 {
-    public string url;
+    public string url { get; set; }
+
+    public VoiceRequest()
+    {
+        
+    }
 }

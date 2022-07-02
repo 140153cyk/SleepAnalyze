@@ -1,6 +1,7 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=cd454625_002D6ab9_002D435c_002Da653_002D8488339cee87/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="TestMethod1" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;MSTest::9395F88B-BE0A-4760-98E2-F57F0FEEB987::net6.0::Tests.SpeechProcessTest.TestMethod1&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::9395F88B-BE0A-4760-98E2-F57F0FEEB987::net6.0::Tests.SpeechProcessTest.TestGetResult&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::9395F88B-BE0A-4760-98E2-F57F0FEEB987::net6.0::Tests.SpeechProcessTest.TestTalkInSleep&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

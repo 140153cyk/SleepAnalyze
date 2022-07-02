@@ -22,8 +22,17 @@ public class SpeechProcessTest
     [TestMethod]
     public void TestGetResult()
     {
-        string url = "";
+        string url = "https://636c-cloud1-8gbtq97y394b518b-1311389966.tcb.qcloud.la/records/2022/07/02 15:45:22-75080.mp3";
         var s = ASR.GetSpeech(url, "2");
         Console.WriteLine(s);
+    }
+
+    [TestMethod]
+    public void TestTalkInSleep()
+    {
+        string url =
+            "https://636c-cloud1-8gbtq97y394b518b-1311389966.tcb.qcloud.la/records/2022/07/02 15:45:22-75080.mp3";
+        var res = ASR.TalkInSleep(url, Guid.NewGuid().ToString());
+        Console.WriteLine(res);
     }
 }
