@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Reflection;
+using Microsoft.AspNetCore.Mvc;
 using aspnetapp.RequestAndResponse;
 using Service.SpeechProcess;
 
@@ -16,9 +17,9 @@ namespace aspnetapp.Controllers
         }
 
         [HttpPost]
-        public ActionResult<VoiceResponse> GetTalkInSleep(VoiceRequest voiceRequest)
+        public ActionResult<VoiceResponse> GetTalkInSleep([FromBody] VoiceRequest data)
         {
-            var url = voiceRequest.url;
+            var url = data.url;
             if (string.IsNullOrWhiteSpace(url))
             {
                 return BadRequest("Url is empty or consists of only whitespaces.");
@@ -26,13 +27,15 @@ namespace aspnetapp.Controllers
 
             try
             {
-                var res = ASR.TalkInSleep(url);
-                return new VoiceResponse(res);
+                ASR asr = new ASR();
+                var speech = ASR.GetSpeech(url, Guid.NewGuid().ToString());
+                var isTalk = ASR.TalkInSleep(speech);
+                return new VoiceResponse(isTalk, speech);
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                return BadRequest(e.Message);
+                return BadRequest(e.Message + '\n' + e.StackTrace);
             }
         }
     }

@@ -57,10 +57,16 @@ public class ASR
         return speech;
     }
 
-    public static bool TalkInSleep(string url, string voiceFormat = "m4a")
+    public static bool TalkInSleep(string url, string usrAudioKey, string voiceFormat = "m4a")
     {
-        string usrAudioKey = Guid.NewGuid().ToString();
         string speech = GetSpeech(url, usrAudioKey, voiceFormat);
+        Regex regex = new Regex(@"嗯+");
+        if (regex.IsMatch(speech) || string.IsNullOrWhiteSpace(speech)) return false;
+        return true;
+    }
+
+    public static bool TalkInSleep(string speech)
+    {
         Regex regex = new Regex(@"嗯+");
         if (regex.IsMatch(speech) || string.IsNullOrWhiteSpace(speech)) return false;
         return true;
