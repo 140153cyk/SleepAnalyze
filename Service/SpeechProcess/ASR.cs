@@ -1,5 +1,8 @@
 ﻿using System.Net;
+using System.Text.RegularExpressions;
 using System.Web;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Service.SpeechProcess;
 
@@ -36,8 +39,30 @@ public class ASR
         req.Url = encodedUrl; // 语音 URL，需进行urlencode编码
         req.VoiceFormat = voiceFormat; // 识别音频的音频格式
         req.UsrAudioKey = usrAudioKey; // 用户端对此任务的唯一标识，用户自助生成，用于用户查找识别结果。
+        req.FilterPunc = 2; // 是否过滤标点符号。 0：不过滤，1：过滤句末标点，2：过滤所有标点。
         SentenceRecognitionResponse resp = client.SentenceRecognitionSync(req);
         
         return AbstractModel.ToJsonString(resp);
+    }
+
+    public static string GetSpeech(string url, string usrAudioKey, string voiceFormat = "m4a")
+    {
+        string resp = RecognizeSpeech(url, usrAudioKey, voiceFormat);
+        var jo = JsonConvert.DeserializeObject(resp) as JObject;
+        string speech = "NULL";
+        if (jo != null)
+        {
+            speech = jo["Result"].ToString();
+        }
+        return speech;
+    }
+
+    public static bool TalkInSleep(string url, string voiceFormat = "m4a")
+    {
+        string usrAudioKey = Guid.NewGuid().ToString();
+        string speech = GetSpeech(url, usrAudioKey, voiceFormat);
+        Regex regex = new Regex(@"嗯+");
+        if (regex.IsMatch(speech) || string.IsNullOrWhiteSpace(speech)) return false;
+        return true;
     }
 }

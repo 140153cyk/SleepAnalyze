@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using aspnetapp.RequestAndResponse;
+using Service.SpeechProcess;
 
 namespace aspnetapp.Controllers
 {
     [Route("api/voice")]
     [ApiController]
-    public class VoiceController:ControllerBase
+    public class VoiceController : ControllerBase
     {
         private readonly CounterContext _context;
 
@@ -12,12 +14,26 @@ namespace aspnetapp.Controllers
         {
             _context = context;
         }
-        [HttpGet]
-        public bool getUseful()
-        {
-            return true;
-        }
-        
 
+        [HttpPost]
+        public ActionResult<VoiceResponse> GetTalkInSleep(VoiceRequest voiceRequest)
+        {
+            var url = voiceRequest.url;
+            if (string.IsNullOrWhiteSpace(url))
+            {
+                return BadRequest("Url is empty or consists of only whitespaces.");
+            }
+
+            try
+            {
+                var res = ASR.TalkInSleep(url);
+                return new VoiceResponse(res);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest(e.Message);
+            }
+        }
     }
 }
