@@ -21,7 +21,7 @@
                     {
                         avg += BitConverter.ToInt16(readBuffer,2*j) * 1.0 / samplesPerSecond;
                     }
-                        silenceDict.Add(i,Math.Abs(avg));
+                    silenceDict.Add(i,Math.Abs(avg));
                     i++;
                 } while (samplesRead > 0);
             }
