@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
 using aspnetapp.RequestAndResponse;
-using Service.SpeechProcess;
+using aspnetapp.Service.SpeechProcess;
 
 namespace aspnetapp.Controllers
 {

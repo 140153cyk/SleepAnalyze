@@ -1,10 +1,8 @@
-using System;
-using System.Net;
 using System.Web;
+using aspnetapp.Service.SpeechProcess;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Service.SpeechProcess;
 
-namespace Tests;
+namespace aspnetapp.Tests;
 
 [TestClass]
 public class SpeechProcessTest

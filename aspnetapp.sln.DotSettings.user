@@ -4,4 +4,6 @@
     &lt;TestId&gt;MSTest::9395F88B-BE0A-4760-98E2-F57F0FEEB987::net6.0::Tests.SpeechProcessTest.TestGetResult&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;MSTest::9395F88B-BE0A-4760-98E2-F57F0FEEB987::net6.0::Tests.SpeechProcessTest.TestTalkInSleep&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
+&lt;/SessionState&gt;</s:String>
+	
+	</wpf:ResourceDictionary>

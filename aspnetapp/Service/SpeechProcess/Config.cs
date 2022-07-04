@@ -1,4 +1,4 @@
-﻿namespace Service.SpeechProcess;
+﻿namespace aspnetapp.Service.SpeechProcess;
 
 public class Config
 {

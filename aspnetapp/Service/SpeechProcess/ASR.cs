@@ -1,17 +1,13 @@
-﻿using System.Net;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using System.Web;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-
-namespace Service.SpeechProcess;
-
-using System;
-using System.Threading.Tasks;
-using TencentCloud.Common;
-using TencentCloud.Common.Profile;
 using TencentCloud.Asr.V20190614;
 using TencentCloud.Asr.V20190614.Models;
+using TencentCloud.Common;
+using TencentCloud.Common.Profile;
+
+namespace aspnetapp.Service.SpeechProcess;
 
 public class ASR
 {
