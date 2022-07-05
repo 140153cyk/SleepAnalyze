@@ -15,12 +15,11 @@ namespace Service.Test
             double avg = 0;
             Dictionary<int, double> DBdic = processor.toDB(out avg);
             Console.WriteLine("平均分贝为:"+avg);
-            Dictionary<double, double> freDic = reader.readFrequency("test3.wav");
-            foreach (KeyValuePair<double, double> kvp in freDic)
+            
+            foreach(KeyValuePair<double, double> kvp in reader.readFrequency("test.wav"))
             {
                 Console.WriteLine((int)kvp.Key+","+kvp.Value);
             }
-
         }
     }
 }
