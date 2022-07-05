@@ -8,6 +8,7 @@ namespace Service.Wav
 {
     public class WavProcessor
     {
+        public enum VoiceKind{ SPEECH , UNUSE , SNORE }
         /**
          * 获取rawdataDic中各个时间段的分贝大小
          */ 
@@ -54,6 +55,17 @@ namespace Service.Wav
             }
             lessThanFTR = lessThanFT / sum;
             lessThanSHR = lessThanSH / sum;
+        }
+
+        /**
+         * 根据频率判断音频种类
+         */ 
+        public static VoiceKind judgeFre(Dictionary<double, double> freDic)
+        {
+            getMainFrequency(freDic, out double lessThanFTR, out double lessThanSHR);
+            if (lessThanSHR > 0.5) return VoiceKind.SNORE;
+            if (lessThanFTR > 0.5) return VoiceKind.SPEECH;
+            return VoiceKind.UNUSE;
         }
 
     }
