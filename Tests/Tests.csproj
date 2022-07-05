@@ -16,7 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Service\Service.csproj" />
+      <ProjectReference Include="..\aspnetapp\aspnetapp.csproj" />
     </ItemGroup>
 
 </Project>
