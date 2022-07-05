@@ -8,44 +8,53 @@ namespace Service.Wav
 {
     public class WavProcessor
     {
-        public Dictionary<int, double> dataDic { get; set; }
-        public WavProcessor(Dictionary<int,double> dic)
+        /**
+         * 获取rawdataDic中各个时间段的分贝大小
+         */ 
+        public static Dictionary<int,double> toDB(Dictionary<int, double> dataDic)
         {
-            dataDic = dic;
-        }
-
-        public Dictionary<int,double> toDB(out double avgDB)
-        {
-            avgDB = 0;
             Dictionary<int,double> res = new Dictionary<int, double>();
             foreach(KeyValuePair<int,double> kvp in dataDic)
             {
                 double db = 20 * Math.Log10((kvp.Value) );
                 res.Add(kvp.Key, db);
-                if(db>0)avgDB += db;
             }
-            avgDB /= dataDic.Count;
             return res;
         }
 
-        public Dictionary<float, float> toFrequency(out double avgFreq)
+        /**
+         * 获取rawdataDic中的平均分贝
+         */ 
+        public static double getAvgDb(Dictionary<int, double> dataDic)
         {
-            avgFreq = 0;
-            float[] times = new float[dataDic.Count];
-            float[] strength = new float[dataDic.Count];
-            for(int i = 0; i < dataDic.Count; i++)
+            Dictionary<int, double> dbDic = toDB(dataDic);
+            double total = 0;
+            foreach(KeyValuePair<int,double> kvp in dbDic)
             {
-                times[i] = Convert.ToSingle(i);
-                strength[i] = Convert.ToSingle(dataDic[i]);
+                if(kvp.Value > 0)total += kvp.Value;
             }
-
-            FFTUtil.FFT(times, strength);
-            Dictionary<float,float> res = new Dictionary<float, float>();
-            for(int i = 0; i < times.Length; i++)
-            {
-                res.Add(times[i], strength[i]);
-            }
-            return res;
+            return total / dbDic.Count;
         }
+
+        /**
+         * 获取一段音频中小于4000Hz与小于700Hz的能量占比
+         */ 
+        public static void getMainFrequency(Dictionary<double, double> freDic,out double lessThanFTR, out double lessThanSHR)
+        {
+            double sum = 0;
+            double lessThanFT = 0;
+            double lessThanSH = 0;
+            foreach(KeyValuePair<double, double> kvp in freDic)
+            {
+                sum += kvp.Value;
+                if (kvp.Key > 4000) break;
+                lessThanFT += kvp.Value;
+                if (kvp.Key > 700) break;
+                lessThanSH += kvp.Value;
+            }
+            lessThanFTR = lessThanFT / sum;
+            lessThanSHR = lessThanSH / sum;
+        }
+
     }
 }

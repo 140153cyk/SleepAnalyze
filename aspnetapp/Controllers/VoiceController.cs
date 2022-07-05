@@ -19,6 +19,7 @@ namespace aspnetapp.Controllers
         [HttpPost]
         public ActionResult<VoiceResponse> GetTalkInSleep([FromBody] VoiceRequest data)
         {
+
             var url = data.url;
             if (string.IsNullOrWhiteSpace(url))
             {
@@ -37,6 +38,12 @@ namespace aspnetapp.Controllers
                 Console.WriteLine(e);
                 return BadRequest(e.Message + '\n' + e.StackTrace);
             }
+        }
+
+        [HttpPost("postVoice")]
+        public void GetVoice([FromBody] VoiceRequest data)
+        {
+
         }
     }
 }

@@ -14,7 +14,24 @@ namespace Service.Wav
 {
     public class WavReader
     {
-        public Dictionary<int, double> readDB(string filePath)
+        /**
+         * 把mp3问价转换为wav文件，存储在wavfile指定的路径
+         */ 
+        private static void ConvertMp3ToWav(string mp3file, string wavfile)
+        {
+            using (MediaFoundationReader reader = new MediaFoundationReader(mp3file))
+            {
+                using (WaveStream pcmStream = WaveFormatConversionStream.CreatePcmStream(reader))
+                {
+                    WaveFileWriter.CreateWaveFile(wavfile, pcmStream);
+                }
+            }
+        }
+
+        /**
+         * 读取wav文件，获取每十毫秒中的平均数据，可以由WavProcessor处理
+         */ 
+        public static Dictionary<int, double> readDB(string filePath)
         {
             var voiceDict = new Dictionary<int, double>();
             using (WaveFileReader wave = new WaveFileReader(filePath))
@@ -42,7 +59,11 @@ namespace Service.Wav
             }
             return voiceDict;
         }
-        public Dictionary<double, double> readFrequency(string filePath)
+
+        /**
+         * 从wav文件中读取各个频段的能量占比，可以用WavProcessor中换算成说话频段和呼噜频段的占比
+         */ 
+        public static Dictionary<double, double> readFrequency(string filePath)
         {
             Dictionary<double, double> frequencyDict=new Dictionary<double, double>();
 
