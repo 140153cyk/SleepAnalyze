@@ -1,22 +1,26 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using Service.SpeechProcess;
-namespace Service.SpeechProcess
+using Service.Wav;
+namespace Service.Test
 {
     public class Promgram
     {
-        public static WavProcessor processor = new WavProcessor();
         
         public static void Main(string[] args)
         {
-            DBReader reader = new DBReader();
-            double sum = 0;
-            foreach(var entity in reader.readDB("test.wav"))
+            WavReader reader = new WavReader();
+            Dictionary<int, double> dic = reader.readDB("test.wav");
+            WavProcessor processor = new WavProcessor(dic);
+            double avg = 0;
+            Dictionary<int, double> DBdic = processor.toDB(out avg);
+            Console.WriteLine("平均分贝为:"+avg);
+            Dictionary<double, double> freDic = reader.readFrequency("test3.wav");
+            foreach (KeyValuePair<double, double> kvp in freDic)
             {
-                Console.WriteLine(entity);
-                sum += entity.Value;
+                Console.WriteLine((int)kvp.Key+","+kvp.Value);
             }
-            Console.WriteLine(sum / reader.readDB("test.wav").Count());
+
         }
     }
 }
