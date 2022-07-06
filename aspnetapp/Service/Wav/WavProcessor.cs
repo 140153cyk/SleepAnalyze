@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Service.Wav
+﻿namespace Service.Wav
 {
+    public enum VoiceKind{ SPEECH , UNUSE , SNORE }
+    
     public class WavProcessor
     {
-        public enum VoiceKind{ SPEECH , UNUSE , SNORE }
+        
         /**
          * 获取rawdataDic中各个时间段的分贝大小
          */ 
@@ -60,8 +56,9 @@ namespace Service.Wav
         /**
          * 根据频率判断音频种类
          */ 
-        public static VoiceKind judgeFre(Dictionary<double, double> freDic)
+        public static VoiceKind judgeFre(string filePath)
         {
+            var freDic = WavReader.readFrequency(filePath);
             getMainFrequency(freDic, out double lessThanFTR, out double lessThanSHR);
             if (lessThanSHR > 0.5) return VoiceKind.SNORE;
             if (lessThanFTR > 0.5) return VoiceKind.SPEECH;

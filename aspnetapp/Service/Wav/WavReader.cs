@@ -1,9 +1,4 @@
 ﻿using NAudio.Wave;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Accord.Audio;
 using Accord.Audio.Formats;
 using Accord.Audio.Windows;
@@ -17,7 +12,7 @@ namespace Service.Wav
         /**
          * 把mp3问价转换为wav文件，存储在wavfile指定的路径
          */ 
-        private static void ConvertMp3ToWav(string mp3file, string wavfile)
+        public static void ConvertMp3ToWav(string mp3file, string wavfile)
         {
             using (MediaFoundationReader reader = new MediaFoundationReader(mp3file))
             {
@@ -96,6 +91,7 @@ namespace Service.Wav
 
                 }
             }
+            sourceDecoder.Close();
             return frequencyDict;
         }
 
