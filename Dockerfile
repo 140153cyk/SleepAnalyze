@@ -6,7 +6,6 @@ WORKDIR /source
 # copy csproj and restore as distinct layers
 COPY *.sln .
 COPY aspnetapp/*.csproj ./aspnetapp/
-COPY Tests/*.csproj ./Tests/
 RUN dotnet restore -r linux-musl-x64 /p:PublishReadyToRun=true
 
 # copy everything else and build app
