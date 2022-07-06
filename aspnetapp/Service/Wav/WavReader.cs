@@ -83,7 +83,11 @@ namespace Service.Wav
                 Complex[,] complexes = complex[i].ToArray();
                 for(int j = 0; j < complex[i].Length/2; j++)
                 {
-                    var addEnergy = complexes[j, 0].SquaredMagnitude() + complexes[j, 1].SquaredMagnitude();
+                    double addEnergy = 0;
+                    for (int k = 0; k < sourceSignal.Channels; k++)
+                    {
+                        addEnergy += complexes[j,k].SquaredMagnitude();
+                    }
                     if (frequencyDict.TryGetValue(Index2Freq(j, sourceSignal.SampleRate, 1024), out double before)){
                         frequencyDict[Index2Freq(j, sourceSignal.SampleRate, 1024)] = before + addEnergy;
                     }
