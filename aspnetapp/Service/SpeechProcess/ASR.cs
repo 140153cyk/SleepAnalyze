@@ -15,7 +15,7 @@ using TencentCloud.Asr.V20190614.Models;
 
 public class ASR
 {
-    public static string RecognizeSpeech(string url, string usrAudioKey, string voiceFormat = "m4a")
+    public static string RecognizeSpeech(string url, string usrAudioKey, string voiceFormat)
     {
         string encodedUrl = HttpUtility.UrlPathEncode(url);
         // string encodedUrl = url;
@@ -60,15 +60,17 @@ public class ASR
     public static bool TalkInSleep(string url, string usrAudioKey, string voiceFormat = "m4a")
     {
         string speech = GetSpeech(url, usrAudioKey, voiceFormat);
-        Regex regex = new Regex(@"嗯+");
-        if (regex.IsMatch(speech) || string.IsNullOrWhiteSpace(speech)) return false;
+        Regex regex1 = new Regex(@"嗯+");
+        Regex regex2 = new Regex(@"嘘+");
+        if (regex1.IsMatch(speech) || regex2.IsMatch(speech) || string.IsNullOrWhiteSpace(speech)) return false;
         return true;
     }
 
     public static bool TalkInSleep(string speech)
     {
-        Regex regex = new Regex(@"嗯+");
-        if (regex.IsMatch(speech) || string.IsNullOrWhiteSpace(speech)) return false;
+        Regex regex1 = new Regex(@"嗯+");
+        Regex regex2 = new Regex(@"嘘+");
+        if (regex1.IsMatch(speech) || regex2.IsMatch(speech) || string.IsNullOrWhiteSpace(speech)) return false;
         return true;
     }
 }

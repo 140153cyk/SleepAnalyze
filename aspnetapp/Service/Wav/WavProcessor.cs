@@ -60,7 +60,7 @@
         {
             var freDic = WavReader.readFrequency(filePath);
             getMainFrequency(freDic, out double lessThanFTR, out double lessThanSHR);
-            if (lessThanSHR > 0.5) return VoiceKind.SNORE;
+            // if (lessThanSHR > 0.5) return VoiceKind.SNORE;
             if (lessThanFTR > 0.5) return VoiceKind.SPEECH;
             return VoiceKind.UNUSE;
         }
