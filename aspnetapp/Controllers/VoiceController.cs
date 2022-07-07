@@ -31,7 +31,7 @@ namespace aspnetapp.Controllers
             string currentTime = time.Year + "-" + time.Month + "-" + time.Day + "-" + time.Hour + "-" + time.Minute +
                                  "-" + time.Second;
             //将mp3格式文件转为wav
-            string wavFilePath = "./WavFiles/" + currentTime + ".wav";
+            string wavFilePath = "./" + currentTime + ".wav";
             WavReader.ConvertMp3ToWav(url, wavFilePath);
 
             var kind = WavProcessor.judgeFre(wavFilePath);
