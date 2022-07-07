@@ -31,56 +31,56 @@ namespace aspnetapp.Controllers
             string currentTime = time.Year + "-" + time.Month + "-" + time.Day + "-" + time.Hour + "-" + time.Minute +
                                  "-" + time.Second;
             //将mp3格式文件转为wav
-            string wavFilePath = "./" + currentTime + ".wav";
-            WavReader.ConvertMp3ToWav(url, wavFilePath);
+            // string wavFilePath = "./" + currentTime + ".wav";
+            // WavReader.ConvertMp3ToWav(url, wavFilePath);
 
-            var kind = WavProcessor.judgeFre(wavFilePath);
+            // var kind = WavProcessor.judgeFre(wavFilePath);
             //获取音频文件的平均分贝
-            var avgDb = WavProcessor.getAvgDb(WavReader.readDB(wavFilePath));
-
+            // var avgDb = WavProcessor.getAvgDb(WavReader.readDB(wavFilePath));
+            var avgDb = 0;
 
             //删除录音文件
-            if (System.IO.File.Exists(wavFilePath))
+            // if (System.IO.File.Exists(wavFilePath))
+            // {
+            //     System.IO.File.Delete(wavFilePath);
+            // }
+            // else throw new Exception("Audio file to delete not found.");
+            //
+            // if(avgDb < 25)
+            //     return new VoiceResponse(false, "", avgDb, VoiceKind.UNUSE, "");
+
+            // switch (kind)
+            // {
+            //     case VoiceKind.UNUSE:
+            //         return new VoiceResponse(false, "", avgDb, VoiceKind.UNUSE, "");
+
+
+            // case VoiceKind.SPEECH:
+            try
             {
-                System.IO.File.Delete(wavFilePath);
+                ASR asr = new ASR();
+                var speech = ASR.GetSpeech(url, currentTime, format);
+                var isTalk = ASR.TalkInSleep(speech);
+                VoiceKind voiceKind = VoiceKind.UNUSE;
+
+                if (isTalk)
+                {
+                    voiceKind = VoiceKind.SPEECH;
+                }
+
+                return new VoiceResponse(isTalk, speech, avgDb, voiceKind, url);
             }
-            else throw new Exception("Audio file to delete not found.");
-
-            if(avgDb < 25)
-                return new VoiceResponse(false, "", avgDb, VoiceKind.UNUSE, "");
-            
-            switch (kind)
+            catch (Exception e)
             {
-                case VoiceKind.UNUSE:
-                    return new VoiceResponse(false, "", avgDb, VoiceKind.UNUSE, "");
-                   
-
-                case VoiceKind.SPEECH:
-                    try
-                    {
-                        ASR asr = new ASR();
-                        var speech = ASR.GetSpeech(url, currentTime, format);
-                        var isTalk = ASR.TalkInSleep(speech);
-                        VoiceKind voiceKind = VoiceKind.UNUSE;
-
-                        if (isTalk)
-                        {
-                            voiceKind = VoiceKind.SPEECH;
-                        }
-
-                        return new VoiceResponse(isTalk, speech, avgDb, voiceKind, url);
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e);
-                        return BadRequest(e.Message + '\n' + e.StackTrace);
-                    }
-
-                // case VoiceKind.SNORE:
-                //     return new VoiceResponse(false, "", avgDb, VoiceKind.SNORE, url);
+                Console.WriteLine(e);
+                return BadRequest(e.Message + '\n' + e.StackTrace);
             }
 
-            return BadRequest("Error");
+            // case VoiceKind.SNORE:
+            //     return new VoiceResponse(false, "", avgDb, VoiceKind.SNORE, url);
         }
+
+        //     return BadRequest("Error");
+        // }
     }
 }
