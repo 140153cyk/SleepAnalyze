@@ -17,10 +17,10 @@ namespace aspnetapp.Controllers
         }
 
         [HttpPost]
-        public ActionResult<VoiceResponse> GetTalkInSleep([FromBody] VoiceRequest data)
+        public ActionResult<VoiceResponse> GetTalkInSleep(string url, string audioFormat)
         {
-            var url = data.url;
-            var format = data.audioFormat;
+            // var url = data.url;
+            // var format = data.audioFormat;
             if (string.IsNullOrWhiteSpace(url))
             {
                 return BadRequest("Url is empty or consists of only whitespaces.");
@@ -59,7 +59,7 @@ namespace aspnetapp.Controllers
             try
             {
                 ASR asr = new ASR();
-                var speech = ASR.GetSpeech(url, currentTime, format);
+                var speech = ASR.GetSpeech(url, currentTime, audioFormat);
                 var isTalk = ASR.TalkInSleep(speech);
                 VoiceKind voiceKind = VoiceKind.UNUSE;
 
